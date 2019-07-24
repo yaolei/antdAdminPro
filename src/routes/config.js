@@ -1,9 +1,15 @@
 export default {
+<<<<<<< HEAD
     menus: [ // 菜单相关路由 irene test!234jj test iii
         { key: '/app/dashboard/index', title: '首页', icon: 'mobile', component: 'Dashboard' },
+=======
+    menus: [ // 菜单相关路由
+        { key: '/app/dashboard/index', title: 'Index', icon: 'mobile', component: 'Dashboard' },
+>>>>>>> 7a3508d222b005a4a5b237067987291f1c1b0b0b
         {
             key: '/app/ui', title: 'UI', icon: 'scan',
             subs: [
+                { key: '/app/ui/testMe', title: 'testMe', component: 'TestMe'},
                 { key: '/app/ui/buttons', title: '按钮', component: 'Buttons'},
                 { key: '/app/ui/icons', title: '图标', component: 'Icons'},
                 { key: '/app/ui/spins', title: '加载中', component: 'Spins'},
