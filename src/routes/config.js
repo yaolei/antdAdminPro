@@ -1,10 +1,11 @@
 export default {
     menus: [ // 菜单相关路由 irene test!234jj test iii
-        { key: '/app/dashboard/index', title: '首页12', icon: 'mobile', component: 'Dashboard' },
+        { key: '/app/dashboard/index', title: '首页', icon: 'mobile', component: 'Dashboard' },
         {
             key: '/app/ui', title: 'UI', icon: 'scan',
             subs: [
                 { key: '/app/ui/testMe', title: 'testMe', component: 'TestMe'},
+                { key: '/app/ui/baiDuMap', title: '百度地图', component: 'baiDuMap'},
                 { key: '/app/ui/buttons', title: '按钮', component: 'Buttons'},
                 { key: '/app/ui/icons', title: '图标', component: 'Icons'},
                 { key: '/app/ui/spins', title: '加载中', component: 'Spins'},
