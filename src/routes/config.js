@@ -1,5 +1,5 @@
 export default {
-    menus: [ // 菜单相关路由 irene test!234jj test iii
+    menus: [ // 菜单相关路由 irene test!234jj test iii l
         { key: '/app/dashboard/index', title: '首页', icon: 'mobile', component: 'Dashboard' },
         {
             key: '/app/ui', title: 'UI', icon: 'scan',
