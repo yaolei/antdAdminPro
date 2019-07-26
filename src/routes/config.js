@@ -5,7 +5,7 @@ export default {
             key: '/app/ui', title: 'UI', icon: 'scan',
             subs: [
                 { key: '/app/ui/testMe', title: 'testMe', component: 'TestMe'},
-                { key: '/app/ui/baiDuMap', title: '百度地图', component: 'baiDuMap'},
+                { key: '/app/ui/txMap', title: '腾讯地图', component: 'TxMap'},
                 { key: '/app/ui/buttons', title: '按钮', component: 'Buttons'},
                 { key: '/app/ui/icons', title: '图标', component: 'Icons'},
                 { key: '/app/ui/spins', title: '加载中', component: 'Spins'},
