@@ -1,38 +1,102 @@
 import React from 'react';
-import { Row, Col, Card, Input, Menu, Dropdown, Icon } from 'antd';
+import {Col, Card, Input, Cascader, Icon, Dropdown } from 'antd';
 import BreadcrumbCustom from '../BreadcrumbCustom';
 import ReactQMap from 'react-qmap';
+import city from './cityData';
 
 
 const { Search } = Input;
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-        1st menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-        2nd menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-        3rd menu item
-      </a>
-    </Menu.Item>
-  </Menu>
-);
 
+function onChange(value) {
+    console.log(value);
+}
 
 class TxMap extends React.Component {
-    render() {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            jsonDatas :'',
+            jsonDataDetail :[]
+        }
+    } 
+
+    onSearch(val) {
         
+    }
+
+    genCity() {
+        var cityDas = [];
+        if(this.state.jsonDataDetail.length > 0) {
+            for (var i = 0; i< this.state.jsonDataDetail.length; i++) {
+                cityDas.push(
+                    <div key={i}>
+                        {this.state.jsonDataDetail[i]}
+                    </div>
+                )
+            }
+        }
+    }
+
+        // componentDidUpdate(props) {
+        //     this.state.jsonDataDetail
+        // }
+    getProvinceData = () => {
+        var res = [];
+        var len = city.provinces.length;
+        for(let i = 0; i < len; i++) {                        
+          res.push(
+              <div key={i}>
+                <div onClick={() => {this.getCityData(city.provinces[i].name, city.provinces[i].code)}}>
+                    {city.provinces[i].name} <Icon type="down" />
+                </div>
+                <div id={city.provinces[i].code}></div>
+            </div>
+
+              );
+        }
+
+        this.setState({
+            jsonDatas: res
+        })
+      };
+
+      getCityData = (name, proId) => {
+        // var proviDatas = [];
+        var citysDatas = [];
+        var provinceDatas = city.provinces;
+        var len1 = provinceDatas.length;
+        
+        for(let i = 0; i < len1; i++) {
+            var provName = provinceDatas[i].name;
+            if (name === provName) {
+               for (let j = 0; j < provinceDatas[i].cities.length; j++) {
+                    citysDatas.push(
+                        <div key={i}>
+                            <div style = {{ width: 10, height: 10}} >
+                                {provinceDatas[i].cities[j].name}
+                            </div>
+                        </div>
+                    );
+                } 
+            }
+        }
+        var str = document.getElementById(proId).innerHTML(citysDatas);
+        console.log(str);
+        // var str = document.getElementById(proId);
+        // str.innerHTML(citysDatas)
+        // this.setState({
+        //     jsonDataDetail: citysDatas
+        // })
+        // this.forceUpdate();
+      };
+
+    render() { 
+        console.log(this.state.jsonDataDetail, 'hhhhhhh')
         return (
             <div className="gutter-example button-demo">
                 <BreadcrumbCustom first="UI" second="txMap" />
-                <Row gutter={16}>
+                {/* <Row gutter={16}> */}
                     <Col className="gutter-row" md={12}>
                         <div className="gutter-box">
                             <Card bordered={false}>
@@ -42,13 +106,18 @@ class TxMap extends React.Component {
                                         placeholder="input search text"
                                         onSearch={value => console.log(value)}
                                         style={{ width: 200 }}
-                                    />
+                                    /> 
 
-                                    <Dropdown overlay={menu}>
-                                        <a className="ant-dropdown-link" href="http://localhost:3000/#/app/ui/txMap">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请选择城市 <Icon type="down" />
-                                        </a>
-                                    </Dropdown>
+                                    <div style={{ width: 10 }} > </div>
+
+                                    <div>
+                                        <div id = "province" onClick = {this.getProvinceData.bind(this)}>请选择省份<Icon type="down" /></div>
+                                        <div id = "allProvince">
+                                            {this.state.jsonDatas}                                  
+                                        </div>
+                                        
+                                    </div>
+
                                 </div>
                             
                                 <br />
@@ -63,7 +132,7 @@ class TxMap extends React.Component {
                             
                         </div>
                     </Col>
-                </Row>
+                {/* </Row> */}
                 <style>{`
                     .button-demo .ant-btn {
                         margin-right: 8px;
