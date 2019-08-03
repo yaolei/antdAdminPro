@@ -101,7 +101,6 @@ class TxMap extends React.Component {
           if(res.ok){
             // alert('进if条件')
             res.text().then((data)=>{
-              debugger
               const detail=JSON.parse(data)
               this.setState({
                 IP: detail.result.ip,
@@ -114,8 +113,6 @@ class TxMap extends React.Component {
               })
             })
           }
-        //   console.log(this.state.cityName,'城市');
-        //   console.log(this.state.adcode,'adcode');
         }).catch((res)=>{
           console.log(res.status);
         });
