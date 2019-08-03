@@ -6,7 +6,6 @@ import city from './cityData';
 
 
 const { Search } = Input;
-
 function onChange(value) {
     console.log(value);
 }
@@ -17,7 +16,14 @@ class TxMap extends React.Component {
         super(props)
         this.state = {
             jsonDatas :'',
-            jsonDataDetail :[]
+            jsonDataDetail :[],
+            IP : '',
+            latitudeNum : '',
+            longitudeNum : '',
+            nation : '',
+            province: '',
+            cityName : '',
+            adcode: ''
         }
     } 
 
@@ -38,9 +44,6 @@ class TxMap extends React.Component {
         }
     }
 
-        // componentDidUpdate(props) {
-        //     this.state.jsonDataDetail
-        // }
     getProvinceData = () => {
         var res = [];
         var len = city.provinces.length;
@@ -80,9 +83,8 @@ class TxMap extends React.Component {
                     );
                 } 
             }
-        }
-        var str = document.getElementById(proId).innerHTML(citysDatas);
-        console.log(str);
+        };
+
         // var str = document.getElementById(proId);
         // str.innerHTML(citysDatas)
         // this.setState({
@@ -91,6 +93,34 @@ class TxMap extends React.Component {
         // this.forceUpdate();
       };
 
+    componentDidMount () {
+        // alert('已经进入到该函数')
+        // 获取地理位置
+        fetch('http://apis.map.qq.com/ws/location/v1/ip?key=FGRBZ-PJ76Q-S475Q-GM425-4CV5Q-CTBVK').then((res)=>{
+        // alert('测试fetch')
+          if(res.ok){
+            // alert('进if条件')
+            res.text().then((data)=>{
+              debugger
+              const detail=JSON.parse(data)
+              this.setState({
+                IP: detail.result.ip,
+                latitudeNum: detail.result.location.lat,
+                longitudeNum: detail.result.location.lng,
+                nation: detail.result.ad_info.nation,
+                province: detail.result.ad_info.province,
+                cityName: detail.result.ad_info.city,
+                adcode: detail.result.ad_info.adcode
+              })
+            })
+          }
+        //   console.log(this.state.cityName,'城市');
+        //   console.log(this.state.adcode,'adcode');
+        }).catch((res)=>{
+          console.log(res.status);
+        });
+      }
+    
     render() { 
         console.log(this.state.jsonDataDetail, 'hhhhhhh')
         return (
@@ -111,8 +141,8 @@ class TxMap extends React.Component {
                                     <div style={{ width: 10 }} > </div>
 
                                     <div>
-                                        <div id = "province" onClick = {this.getProvinceData.bind(this)}>请选择省份<Icon type="down" /></div>
-                                        <div id = "allProvince">
+                                        <div onClick = {this.getProvinceData.bind(this)}>请选择省份<Icon type="down" /></div>
+                                        <div>
                                             {this.state.jsonDatas}                                  
                                         </div>
                                         
@@ -121,9 +151,18 @@ class TxMap extends React.Component {
                                 </div>
                             
                                 <br />
-                                        {/* This is frist test page. */}
+                                        {/* <div onClick = {this.getIp.bind(this)}>获取ip</div> */}
+                                        <div>
+                                        <div style={{fontSize:20}}>定位用户当前所在城市具体信息：</div>
+                                        <div>当前用户ip地址：{this.state.IP}</div>
+                                        <div>location：lat-{this.state.latitudeNum}  lng- {this.state.longitudeNum}</div>
+                                        <div>具体位置为：{this.state.nation}-{this.state.province}-{this.state.cityName} </div>
+                                        <div>当前adcode为：{this.state.adcode}</div>
+                                        </div>
+
+
                                         <ReactQMap 
-                                            center={{latitude: 30.53786, longitude: 104.07265}} 
+                                            center={{latitude: this.state.latitudeNum, longitude: this.state.longitudeNum}} 
                                             initialOptions={{zoomControl: true, mapTypeControl: true}} 
                                             apiKey="FGRBZ-PJ76Q-S475Q-GM425-4CV5Q-CTBVK"
                                             style={{height: 900}}    // 高度和宽度默认占父元素的100%
