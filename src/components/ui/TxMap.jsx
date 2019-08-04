@@ -23,13 +23,10 @@ class TxMap extends React.Component {
             nation : '',
             province: '',
             cityName : '',
-            adcode: ''
+            adcode: '',
+            searchText: ''
         }
     } 
-
-    onSearch(val) {
-        
-    }
 
     genCity() {
         var cityDas = [];
@@ -101,6 +98,7 @@ class TxMap extends React.Component {
           if(res.ok){
             // alert('进if条件')
             res.text().then((data)=>{
+                // alert(data)
               const detail=JSON.parse(data)
               this.setState({
                 IP: detail.result.ip,
@@ -116,10 +114,41 @@ class TxMap extends React.Component {
         }).catch((res)=>{
           console.log(res.status);
         });
+      };
+
+      searchLocation = (value) => {
+        this.setState({
+            searchText: value
+        })
+        // var searchURL = 'https://apis.map.qq.com/ws/geocoder/v1/?address=' +value+ '&key=FGRBZ-PJ76Q-S475Q-GM425-4CV5Q-CTBVK'
+        // alert(searchURL)
+        // fetch('searchURL').then((res)=>{
+            fetch('https://apis.map.qq.com/ws/geocoder/v1/?address=' +value+ '&key=FGRBZ-PJ76Q-S475Q-GM425-4CV5Q-CTBVK').then((res)=>{
+             alert('测试方法里fetch')
+              if(res.ok){
+                alert('进方法if条件')
+                res.text().then((data)=>{
+                     alert(data)
+                //   debugger
+                  const detailInfo=JSON.parse(data)
+                  this.setState({
+                    latitudeNum: detailInfo.result.location.lat,
+                    longitudeNum: detailInfo.result.location.lng
+                  })
+                })
+              }
+            }).catch((res)=>{
+              console.log(res.status);
+            });
+
+
       }
+
+
     
     render() { 
-        console.log(this.state.jsonDataDetail, 'hhhhhhh')
+        // alert('当前搜寻内容为：'+ this.state.searchText)
+        // console.log(this.state.jsonDataDetail, 'hhhhhhh')
         return (
             <div className="gutter-example button-demo">
                 <BreadcrumbCustom first="UI" second="txMap" />
@@ -131,7 +160,8 @@ class TxMap extends React.Component {
                                     <Search
                                         id = "searchId"
                                         placeholder="input search text"
-                                        onSearch={value => console.log(value)}
+                                        // onSearch={value => console.log(value)}
+                                        onSearch={this.searchLocation.bind(this)}
                                         style={{ width: 200 }}
                                     /> 
 
