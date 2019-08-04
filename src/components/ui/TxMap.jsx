@@ -91,14 +91,10 @@ class TxMap extends React.Component {
       };
 
     componentDidMount () {
-        // alert('已经进入到该函数')
         // 获取地理位置
         fetch('http://apis.map.qq.com/ws/location/v1/ip?key=FGRBZ-PJ76Q-S475Q-GM425-4CV5Q-CTBVK').then((res)=>{
-        // alert('测试fetch')
           if(res.ok){
-            // alert('进if条件')
             res.text().then((data)=>{
-                // alert(data)
               const detail=JSON.parse(data)
               this.setState({
                 IP: detail.result.ip,
@@ -120,16 +116,9 @@ class TxMap extends React.Component {
         this.setState({
             searchText: value
         })
-        // var searchURL = 'https://apis.map.qq.com/ws/geocoder/v1/?address=' +value+ '&key=FGRBZ-PJ76Q-S475Q-GM425-4CV5Q-CTBVK'
-        // alert(searchURL)
-        // fetch('searchURL').then((res)=>{
             fetch('https://apis.map.qq.com/ws/geocoder/v1/?address=' +value+ '&key=FGRBZ-PJ76Q-S475Q-GM425-4CV5Q-CTBVK').then((res)=>{
-             alert('测试方法里fetch')
               if(res.ok){
-                alert('进方法if条件')
                 res.text().then((data)=>{
-                     alert(data)
-                //   debugger
                   const detailInfo=JSON.parse(data)
                   this.setState({
                     latitudeNum: detailInfo.result.location.lat,
@@ -152,7 +141,6 @@ class TxMap extends React.Component {
         return (
             <div className="gutter-example button-demo">
                 <BreadcrumbCustom first="UI" second="txMap" />
-                {/* <Row gutter={16}> */}
                     <Col className="gutter-row" md={12}>
                         <div className="gutter-box">
                             <Card bordered={false}>
@@ -160,7 +148,6 @@ class TxMap extends React.Component {
                                     <Search
                                         id = "searchId"
                                         placeholder="input search text"
-                                        // onSearch={value => console.log(value)}
                                         onSearch={this.searchLocation.bind(this)}
                                         style={{ width: 200 }}
                                     /> 
@@ -178,7 +165,6 @@ class TxMap extends React.Component {
                                 </div>
                             
                                 <br />
-                                        {/* <div onClick = {this.getIp.bind(this)}>获取ip</div> */}
                                         <div>
                                         <div style={{fontSize:20}}>定位用户当前所在城市具体信息：</div>
                                         <div>当前用户ip地址：{this.state.IP}</div>
