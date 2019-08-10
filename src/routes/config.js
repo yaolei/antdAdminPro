@@ -22,7 +22,7 @@ export default {
         {
             key: '/app/generator', title: 'Generator JCL', icon: 'scan',
             subs: [
-                {key: '/app/generator/generDdl', title: 'generator ddl', component: 'GenerDdl'}
+                {key: '/app/generator/generDdl', title: 'Generator DDL', component: 'GenerDdl'}
             ],
         },
         // {
